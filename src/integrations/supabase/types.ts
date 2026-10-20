@@ -14,16 +14,462 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      availability_days: {
+        Row: {
+          day: string
+          id: string
+          professional_id: string
+          status: Database["public"]["Enums"]["availability_status"]
+        }
+        Insert: {
+          day: string
+          id?: string
+          professional_id: string
+          status: Database["public"]["Enums"]["availability_status"]
+        }
+        Update: {
+          day?: string
+          id?: string
+          professional_id?: string
+          status?: Database["public"]["Enums"]["availability_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "availability_days_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professional_stats"
+            referencedColumns: ["professional_id"]
+          },
+          {
+            foreignKeyName: "availability_days_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professionals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categories: {
+        Row: {
+          icon: string
+          id: string
+          is_small_service: boolean
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          icon?: string
+          id?: string
+          is_small_service?: boolean
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          icon?: string
+          id?: string
+          is_small_service?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      favorites: {
+        Row: {
+          created_at: string
+          professional_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          professional_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          professional_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professional_stats"
+            referencedColumns: ["professional_id"]
+          },
+          {
+            foreignKeyName: "favorites_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professionals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_items: {
+        Row: {
+          caption: string | null
+          created_at: string
+          id: string
+          image_url: string
+          professional_id: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url: string
+          professional_id: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string
+          professional_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_items_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professional_stats"
+            referencedColumns: ["professional_id"]
+          },
+          {
+            foreignKeyName: "portfolio_items_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professionals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      professionals: {
+        Row: {
+          availability: Database["public"]["Enums"]["availability_status"]
+          avatar_url: string | null
+          bio: string | null
+          business_name: string | null
+          category_id: string | null
+          city: string
+          created_at: string
+          id: string
+          instagram: string | null
+          name: string
+          price_notes: string | null
+          price_type: Database["public"]["Enums"]["price_type"]
+          price_value: number | null
+          published: boolean
+          regions: string[]
+          slug: string
+          specialties: string[]
+          user_id: string | null
+          verified: boolean
+          whatsapp: string | null
+        }
+        Insert: {
+          availability?: Database["public"]["Enums"]["availability_status"]
+          avatar_url?: string | null
+          bio?: string | null
+          business_name?: string | null
+          category_id?: string | null
+          city?: string
+          created_at?: string
+          id?: string
+          instagram?: string | null
+          name: string
+          price_notes?: string | null
+          price_type?: Database["public"]["Enums"]["price_type"]
+          price_value?: number | null
+          published?: boolean
+          regions?: string[]
+          slug: string
+          specialties?: string[]
+          user_id?: string | null
+          verified?: boolean
+          whatsapp?: string | null
+        }
+        Update: {
+          availability?: Database["public"]["Enums"]["availability_status"]
+          avatar_url?: string | null
+          bio?: string | null
+          business_name?: string | null
+          category_id?: string | null
+          city?: string
+          created_at?: string
+          id?: string
+          instagram?: string | null
+          name?: string
+          price_notes?: string | null
+          price_type?: Database["public"]["Enums"]["price_type"]
+          price_value?: number | null
+          published?: boolean
+          regions?: string[]
+          slug?: string
+          specialties?: string[]
+          user_id?: string | null
+          verified?: boolean
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "professionals_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      quote_requests: {
+        Row: {
+          address: string | null
+          client_id: string
+          client_name: string | null
+          created_at: string
+          description: string
+          id: string
+          preferred_date: string | null
+          pro_response: string | null
+          professional_id: string
+          quoted_value: number | null
+          status: Database["public"]["Enums"]["request_status"]
+        }
+        Insert: {
+          address?: string | null
+          client_id: string
+          client_name?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          preferred_date?: string | null
+          pro_response?: string | null
+          professional_id: string
+          quoted_value?: number | null
+          status?: Database["public"]["Enums"]["request_status"]
+        }
+        Update: {
+          address?: string | null
+          client_id?: string
+          client_name?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          preferred_date?: string | null
+          pro_response?: string | null
+          professional_id?: string
+          quoted_value?: number | null
+          status?: Database["public"]["Enums"]["request_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quote_requests_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professional_stats"
+            referencedColumns: ["professional_id"]
+          },
+          {
+            foreignKeyName: "quote_requests_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professionals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reports: {
+        Row: {
+          created_at: string
+          id: string
+          professional_id: string | null
+          reason: string
+          reporter_id: string
+          resolved: boolean
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          professional_id?: string | null
+          reason: string
+          reporter_id: string
+          resolved?: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          professional_id?: string | null
+          reason?: string
+          reporter_id?: string
+          resolved?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professional_stats"
+            referencedColumns: ["professional_id"]
+          },
+          {
+            foreignKeyName: "reports_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professionals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          client_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          price_transparency: number | null
+          pro_reply: string | null
+          professional_id: string
+          punctuality: number | null
+          quality: number | null
+          rating: number
+          request_id: string | null
+          reviewer_name: string
+          service: number | null
+          would_recommend: boolean
+        }
+        Insert: {
+          client_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          price_transparency?: number | null
+          pro_reply?: string | null
+          professional_id: string
+          punctuality?: number | null
+          quality?: number | null
+          rating: number
+          request_id?: string | null
+          reviewer_name?: string
+          service?: number | null
+          would_recommend?: boolean
+        }
+        Update: {
+          client_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          price_transparency?: number | null
+          pro_reply?: string | null
+          professional_id?: string
+          punctuality?: number | null
+          quality?: number | null
+          rating?: number
+          request_id?: string | null
+          reviewer_name?: string
+          service?: number | null
+          would_recommend?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professional_stats"
+            referencedColumns: ["professional_id"]
+          },
+          {
+            foreignKeyName: "reviews_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "professionals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: true
+            referencedRelation: "quote_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      professional_stats: {
+        Row: {
+          avg_rating: number | null
+          professional_id: string | null
+          review_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
+      availability_status: "disponivel" | "limitada" | "indisponivel"
+      price_type: "fixo" | "inicial" | "hora" | "diaria" | "consulta"
+      request_status:
+        | "pendente"
+        | "respondido"
+        | "aceito"
+        | "concluido"
+        | "cancelado"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +596,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+      availability_status: ["disponivel", "limitada", "indisponivel"],
+      price_type: ["fixo", "inicial", "hora", "diaria", "consulta"],
+      request_status: [
+        "pendente",
+        "respondido",
+        "aceito",
+        "concluido",
+        "cancelado",
+      ],
+    },
   },
 } as const
